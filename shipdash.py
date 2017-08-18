@@ -97,8 +97,8 @@ widgets = column(
     from_slider,
     to_slider
 )
-first_row = row(widgets, fig_map, fig_plot)
-grid = column(first_row, fig_ts)
+first_row = row(fig_map, fig_plot)
+plots = column(first_row, fig_ts)
 
-bp.curdoc().add_root(grid)
+bp.curdoc().add_root(row(widgets, plots))
 bp.curdoc().title = 'ShipDash'

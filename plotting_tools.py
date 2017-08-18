@@ -10,9 +10,17 @@ from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets import Slider
 
 ##Global settings
+#FIXME! figure settings!
 TOOLS="pan,wheel_zoom,box_zoom,reset,hover"
-pw = 400
-ph = 200
+
+map_width = 400
+map_height = map_width
+
+scatter_width = map_width
+scatter_height = scatter_width
+
+ts_width = map_width*2
+ts_height = map_height/2
 
 def datetime(x):
         return np.array(x, dtype=np.datetime64)
@@ -27,9 +35,13 @@ def draw_map(x_range, y_range):
         tools = TOOLS,
         x_range = x_range,
         y_range = y_range,
-        plot_width = pw,
-        plot_height = ph*2
+        plot_width = map_width,
+        plot_height = map_height,
+        outline_line_color = None,        
     )
+    fig.xgrid.grid_line_color = None
+    fig.ygrid.grid_line_color = None
+    fig.axis.visible = False
     url = 'http://c.tile.openstreetmap.org/{Z}/{X}/{Y}.png'
     attribution = ""#Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL"
     fig.add_tile(WMTSTileSource(url=url, attribution=attribution))
@@ -39,20 +51,26 @@ def draw_timeseries(y_label):
     fig = bp.figure(
         tools = TOOLS,
         x_axis_type = "datetime",
-        plot_width = pw*2,
-        plot_height = ph,
+        plot_width = ts_width,
+        plot_height = ts_height,
         x_axis_label = 'date/time',
-        y_axis_label = y_label
+        y_axis_label = y_label,
+        outline_line_color = None,
     )
+    fig.xgrid.grid_line_color = None
+    fig.ygrid.grid_line_color = None
     return fig
 
 def draw_plot(x_label, y_label):
     fig = bp.figure(
         tools = TOOLS,
-        plot_width = pw,
-        plot_height = ph*2,
+        plot_width = scatter_width,
+        plot_height = scatter_height,
         x_axis_label = x_label,
-        y_axis_label = y_label
+        y_axis_label = y_label,
+        outline_line_color = None,        
     )
+    fig.xgrid.grid_line_color = None
+    fig.ygrid.grid_line_color = None
     return fig
 

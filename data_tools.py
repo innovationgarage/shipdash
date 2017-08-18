@@ -55,8 +55,8 @@ def read_prepare_data(ship):
         long1, lat1 = '1034', '1026'
         long2, lat2 = '1038', '1030'
     df = pd.read_csv(filename, header=None, parse_dates=[0,1], skiprows=sr)
-    df['timestamp2'] = df[0].astype('int')
-    df['timestamp1'] = df[1].astype('int')
+    df['timestamp2'] = pd.to_datetime(df[0])
+    df['timestamp1'] = pd.to_datetime(df[1])
     df = clean(df, ship)
     df = convert_coordinate(df, lat1, 'lat1')
     df = convert_coordinate(df, long1, 'long1')

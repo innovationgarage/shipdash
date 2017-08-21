@@ -11,7 +11,7 @@ from bokeh.models.widgets import Slider
 
 ##Global settings
 #FIXME! figure settings!
-TOOLS="pan,wheel_zoom,box_zoom,reset,hover"
+TOOLS="pan,wheel_zoom,box_zoom,reset"
 
 map_width = 400
 map_height = map_width
@@ -39,6 +39,15 @@ def draw_map(x_range, y_range):
         plot_height = map_height,
         outline_line_color = None,        
     )
+    hover = HoverTool(
+        tooltips=[
+            ('date', '@timestamp_date'),
+            ('longitude', '@long1'),
+            ('lattitude', '@lat1'),
+        ]
+    )
+    fig.add_tools(hover)
+    fig.toolbar.logo = None
     fig.xgrid.grid_line_color = None
     fig.ygrid.grid_line_color = None
     fig.axis.visible = False
@@ -57,6 +66,15 @@ def draw_timeseries(y_label):
         y_axis_label = y_label,
         outline_line_color = None,
     )
+    hover = HoverTool(
+        tooltips=[
+            ('date', '@timestamp_date'),
+            ('longitude', '@long1'),
+            ('lattitude', '@lat1'),
+        ]
+    )
+    fig.add_tools(hover)
+    fig.toolbar.logo = None
     fig.xgrid.grid_line_color = None
     fig.ygrid.grid_line_color = None
     return fig
@@ -70,6 +88,15 @@ def draw_plot(x_label, y_label):
         y_axis_label = y_label,
         outline_line_color = None,        
     )
+    hover = HoverTool(
+        tooltips=[
+            ('date', '@timestamp_date'),
+            ('longitude', '@long1'),
+            ('lattitude', '@lat1'),
+        ]
+    )
+    fig.add_tools(hover)
+    fig.toolbar.logo = None
     fig.xgrid.grid_line_color = None
     fig.ygrid.grid_line_color = None
     return fig

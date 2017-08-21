@@ -19,7 +19,10 @@ source = ColumnDataSource(
     data = {
         'long1': [],
         'lat1': [],
+        'wmlong1': [],
+        'wmlat1': [],
         'timestamp1': [],
+        'timestamp_date': [],
         'feature_ts': [],
         'x': [],
         'y': [],
@@ -30,12 +33,12 @@ fig_map = ptools.draw_map(map_x_range, map_y_range)
 fig_ts = ptools.draw_timeseries(y_label='feature_ts')
 fig_plot = ptools.draw_plot(x_label='X', y_label='Y')
 
-fig_map.line('long1', 'lat1',
+fig_map.line('wmlong1', 'wmlat1',
              source=source, line_color='red', line_alpha=0.5, line_width=3)
 fig_ts.line('timestamp1', 'feature_ts',
-             source=source, line_color='navy', line_alpha=0.5, line_width=3)
-fig_plot.scatter('x', 'y',
-             source=source, fill_color='navy', line_alpha=0.0)
+            source=source, line_color='navy', line_alpha=0.5, line_width=3)
+fig_plot.circle('x', 'y',
+                source=source, fill_color='navy', alpha=0.3, size=5)
 
 ##Set up widgets
 ship_selector = Select(title="Ship name (Not in use!)", value="Fushimi",
@@ -44,7 +47,7 @@ feature_ts_selector = Select(title="Feature_ts:", value="12",
                              options=list(df.loc[:,df.dtypes == 'float64'].columns))
 x_selector = Select(title="X:", value="12",
                              options=list(df.loc[:,df.dtypes == 'float64'].columns))
-y_selector = Select(title="Y:", value="lat2",
+y_selector = Select(title="Y:", value="wmlat2",
                              options=list(df.loc[:,df.dtypes == 'float64'].columns))
 
 from_slider = Slider(title="from step", value=0, start=0, end=len(df), step=1)
@@ -61,21 +64,26 @@ def update_data(attrname, old, new):
     to_ind = to_slider.value
     feature_ts_select = feature_ts_selector.value
     x_select = x_selector.value
-    y_select = y_selector.value    
+    y_select = y_selector.value
     
     # Generate the new curve
     long1 = df['long1'][from_ind:to_ind]
     lat1 = df['lat1'][from_ind:to_ind]
+    wmlong1 = df['wmlong1'][from_ind:to_ind]
+    wmlat1 = df['wmlat1'][from_ind:to_ind]
     timestamp1 = df['timestamp1'][from_ind:to_ind]
+    timestamp_date = df['timestamp_date'][from_ind:to_ind]
     feature_ts = df[feature_ts_select][from_ind:to_ind]
     x = df[x_select][from_ind:to_ind]
-    y = df[y_select][from_ind:to_ind]    
+    y = df[y_select][from_ind:to_ind]
 
     source.data = dict(
         long1=long1, lat1=lat1,
+        wmlong1=wmlong1, wmlat1=wmlat1,        
         timestamp1=timestamp1,
         feature_ts=feature_ts,
         x=x, y=y,
+        timestamp_date=timestamp_date,
     )
         
 for w in [

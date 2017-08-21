@@ -37,8 +37,8 @@ def convert_coordinate(df, col_in, col_out):
 def wgs84_to_web_mercator(df, lon, lat):
     """Converts decimal longitude/latitude to Web Mercator format"""
     k = 6378137
-    df[lon] = df[lon] * (k * np.pi/180.0)
-    df[lat] = np.log(np.tan((90 + df[lat]) * np.pi/360.0)) * k
+    df['wm%s'%lon] = df[lon] * (k * np.pi/180.0)
+    df['wm%s'%lat] = np.log(np.tan((90 + df[lat]) * np.pi/360.0)) * k
     return df
 
 def read_prepare_data(ship):
@@ -65,6 +65,7 @@ def read_prepare_data(ship):
     df = scale_impute(df, 'mean')
     df = wgs84_to_web_mercator(df, 'long1', 'lat1')
     df = wgs84_to_web_mercator(df, 'long2', 'lat2')
+    df['timestamp_date'] = df['timestamp1'].dt.strftime('%Y-%m-%d')
     return df
 
 

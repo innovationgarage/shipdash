@@ -42,11 +42,11 @@ fig_map.line('wmlong1', 'wmlat1',
 fig_ts.line('timestamp1', 'feature_ts',
             source=source, line_color='navy', line_alpha=0.5, line_width=3)
 fig_plot.circle('x', 'y',
-                source=source, fill_color='navy', alpha=0.3, size=5)
+                source=source, fill_color='navy', line_color=None, alpha=0.3, size=5)
 
 ##Set up widgets
-ship_selector = Select(title="Ship name (Not in use!)", value="Diamond",
-                       options=["Diamond", "Fushimi"]) #FIXME!
+ship_selector = Select(title="Ship name (use with caution!)", value="Diamond",
+                       options=["Diamond", "Fushimi"]) ##FIXME! Error handling for columns that only exist in one df but not the other needed!!
 feature_ts_selector = Select(title="Feature_ts:", value="12",
                              options=list(df.loc[:,df.dtypes == 'float64'].columns))
 x_selector = Select(title="X:", value="12",
@@ -96,18 +96,13 @@ def update_data(attrname, old, new):
     )
         
 for w in [
-        ship_selector, ##FIXME!
+        ship_selector,
         from_slider,
         to_slider,
         feature_ts_selector,
         x_selector,
         y_selector,
 ]:
-    # ship_select = ship_selector.value
-    # if ship_select == 'Diamond':
-    #     df = df_diamond
-    # elif ship_select == 'Fushimi':
-    #     df = df_fushimi
     w.on_change('value', update_data)
     
 ##Organize the layout

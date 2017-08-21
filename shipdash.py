@@ -11,8 +11,12 @@ from bokeh.models.widgets import Slider, TextInput, Select
 from bokeh.io import output_file, show
 import data_tools as dtools
 import plotting_tools as ptools
+
 map_x_range, map_y_range = (13884029,12553304), (-2698291,6455972)
-df = dtools.read_prepare_data("Fushimi")
+
+df_fushimi = dtools.read_prepare_data("Fushimi")
+df_diamond = dtools.read_prepare_data("Diamond")
+df = df_diamond
 
 ##Initialize the figures and data source
 source = ColumnDataSource(
@@ -41,15 +45,14 @@ fig_plot.circle('x', 'y',
                 source=source, fill_color='navy', alpha=0.3, size=5)
 
 ##Set up widgets
-ship_selector = Select(title="Ship name (Not in use!)", value="Fushimi",
-                       options=["Fushimi", "Diamond"]) #FIXME!
+ship_selector = Select(title="Ship name (Not in use!)", value="Diamond",
+                       options=["Diamond", "Fushimi"]) #FIXME!
 feature_ts_selector = Select(title="Feature_ts:", value="12",
                              options=list(df.loc[:,df.dtypes == 'float64'].columns))
 x_selector = Select(title="X:", value="12",
-                             options=list(df.loc[:,df.dtypes == 'float64'].columns))
+                    options=list(df.loc[:,df.dtypes == 'float64'].columns))
 y_selector = Select(title="Y:", value="wmlat2",
-                             options=list(df.loc[:,df.dtypes == 'float64'].columns))
-
+                    options=list(df.loc[:,df.dtypes == 'float64'].columns))
 from_slider = Slider(title="from step", value=0, start=0, end=len(df), step=1)
 to_slider = Slider(title="to step", value=100, start=0, end=len(df), step=1)
 
@@ -58,7 +61,13 @@ to_slider = Slider(title="to step", value=100, start=0, end=len(df), step=1)
 #     fig_ts.yaxis.axis_label = to_slider.value
 #     to_slider.on_change('value', update_plot_labels)
     
-def update_data(attrname, old, new):    
+def update_data(attrname, old, new):
+    global df
+    if str(new).lower() == 'fushimi':
+        df = df_fushimi
+    elif str(new).lower() == 'diamond':
+        df = df_diamond
+        
     # Get the current slider values
     from_ind = from_slider.value
     to_ind = to_slider.value
@@ -94,6 +103,11 @@ for w in [
         x_selector,
         y_selector,
 ]:
+    # ship_select = ship_selector.value
+    # if ship_select == 'Diamond':
+    #     df = df_diamond
+    # elif ship_select == 'Fushimi':
+    #     df = df_fushimi
     w.on_change('value', update_data)
     
 ##Organize the layout

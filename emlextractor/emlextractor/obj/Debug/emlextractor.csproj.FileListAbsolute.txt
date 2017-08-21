@@ -1,0 +1,13 @@
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\emlextractor.exe.config
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\emlextractor.exe
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\emlextractor.pdb
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\MsgReader.dll
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\MsgReader.pdb
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\MsgReader.xml
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\de\MsgReader.resources.dll
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\fr\MsgReader.resources.dll
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\nl\MsgReader.resources.dll
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\bin\Debug\zh-CN\MsgReader.resources.dll
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\obj\Debug\emlextractor.csprojResolveAssemblyReference.cache
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\obj\Debug\emlextractor.exe
+d:\erwin\documents\visual studio 2017\Projects\emlextractor\emlextractor\obj\Debug\emlextractor.pdb

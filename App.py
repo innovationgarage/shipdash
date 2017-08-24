@@ -18,17 +18,26 @@ class App(object):
         "path": Map.Map.draw_path
     }
 
-    def __init__(self, graph_item_width=400, graph_item_height=400):
+    def __init__(self, data, active_data, mapping, range, layout, graph_item_width=400, graph_item_height=400):
         self.graph_item_width = graph_item_width
         self.graph_item_height = graph_item_height
 
-    def init_dsrc(self, *columns):
-        """All plots start by having no data plotted in them. However,
-        we need a dsrc to later use to populate the plots with. These
-        column names should come from the config file"""
-        self.dsrc = ColumnsDataSource(data={})
-        for col in columns:
-            self.dsrc.add([], col)
+        self.mapping = mapping
+        self.range = range
+        self.data_sources = {
+            name: DataSource.load(cfg)
+            for name, cfg in data.iteritems()
+        }
+        self.active_data = active_data
+        self.layout = GraphElement.GraphElement.load(layout)
+
+    def get_dsrcs(self):
+        for active_data in self.active_data:
+            yield self.data_sources[active_data].dsrc
+
+    def update_dsrcs(self):
+        for data_source in self.data_sources.values():
+            data_source.update_dsrc()
 
     def init_graph_element(config):
         return graph_types[config['type']](**config['args'])

@@ -19,17 +19,16 @@ class Map(GraphElement.GraphElement):
             plot_height = int(self.app.graph_item_height * self.height),
         )
         self.graph.add_tile(WMTSTileSource(url=self.url, attribution=self.attribution))
-        
-    def draw_path(self, lon, lat, dsrc, **kwargs):
-        self.lon = lon
-        self.lat = lat
-        self.dsrc = dsrc
-        self.style = "path"
-        return self.graph.line(self.lon, self.lat, source=self.dsrc)
+        self.draw()
+
+    def draw_dsrc(self, dsrc):
+        return self.graph.line("%s:longitude" % self.id, "%s:latitude" % self.id, source=dsrc)
+
 
     def save(self):
         res = GraphElement.GraphElement.save(self)
-        res['type'] = 'Map'
         res['args']['width'] = self.width
         res['args']['height'] = self.height
         return res
+
+GraphElement.GraphElement.types['Map'] = Map

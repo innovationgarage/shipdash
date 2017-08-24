@@ -12,9 +12,13 @@ class Scatter(GraphElement.GraphElement):
             plot_height = int(self.app.graph_item_height * self.height),
         )
 
+    def draw_dsrc(self, dsrc):
+        self.draw_scatter(dsrc)
+
     def save(self):
         res = GraphElement.GraphElement.save(self)
-        res['type'] = 'Scatter'
         res['args']['width'] = self.width
         res['args']['height'] = self.height
         return res
+
+GraphElement.GraphElement.types['Scatter'] = Scatter

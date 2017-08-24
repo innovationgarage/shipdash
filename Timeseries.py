@@ -13,9 +13,13 @@ class Timeseries(GraphElement.GraphElement):
             plot_height = int(self.app.graph_item_height * self.height),
         )
 
+    def draw_dsrc(self, dsrc):
+        self.draw_line(dsrc)
+
     def save(self):
         res = GraphElement.GraphElement.save(self)
-        res['type'] = 'Timeseries'
         res['args']['width'] = self.width
         res['args']['height'] = self.height
         return res
+
+GraphElement.GraphElement.types['Timeseries'] = Timeseries

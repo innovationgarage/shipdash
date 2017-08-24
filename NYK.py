@@ -4,18 +4,26 @@ import pandas as pd
 pd.options.mode.chained_assignment = None
 from sklearn.preprocessing import Imputer, StandardScaler
 import DataSource
+import os.path
 
 class NYK(DataSource.DataSource):
 
-    def __init__(self, app, dsrc_name, dsrc_type='csv', dsrc_path='data/'):
+    def __init__(self, app, dsrc_name, dsrc_type='csv', dsrc_path='data/', file_name = '', header_rows=None, date_cols=None, skip_rows=None, lat1=None, long1=None, lat2=None, long2=None):
         DataSource.DataSource.__init__(self, app, dsrc_name)
         self.dsrc_type = dsrc_type
         self.dsrc_path = dsrc_path
-        with open('dash_config.json') as data_file:
-            config = json.load(data_file)
-        self.config = [x if x['args']['ship_name']==self.dsrc_name else '' for x in config['app']['data']['args']['children']][0]
+        self.file_name = file_name
+        self.header_rows = header_rows
+        self.date_cols = date_cols
+        self.skip_rows = skip_rows
+        self.lat1 = lat1
+        self.long1 = long1
+        self.lat2 = lat2
+        self.long2 = long2
+]
         self.read_prepare_data()
-    
+        self.init_dsrc()
+
     """FIXME! These methods are fine-tuned for the current data sets. I
     need to generalize them once I know more about different types of data
     coming in"""
@@ -65,20 +73,23 @@ class NYK(DataSource.DataSource):
     def read_prepare_data(self):
         """Use all data tools above to deliver the final cleaned DataFrame"""
         self.data = self.dsrc_types[self.dsrc_type](
-            str(self.dsrc_path) + str(self.config['args']['file_name']),
-            header = self.config['args']['header_rows'],
-            parse_dates = self.config['args']['date_cols'],
-            skiprows = self.config['args']['skip_rows'],
+            os.path.join(self.dsrc_path, self.file_name),
+            header = self.header_rows,
+            parse_dates = self.date_cols,
+            skiprows = self.skip_rows,
             error_bad_lines = False,
         )
+
         self.data['timestamp2'] = pd.to_datetime(self.data[0])
         self.data['timestamp1'] = pd.to_datetime(self.data[1])
         self.clean(self.data, self.dsrc_name)
-        self.convert_coordinate(self.data, str(self.config['args']['lat1']), 'lat1')
-        self.convert_coordinate(self.data, str(self.config['args']['long1']), 'long1')
-        self.convert_coordinate(self.data, str(self.config['args']['lat2']), 'lat2')
-        self.convert_coordinate(self.data, str(self.config['args']['long2']), 'long2')
+        self.convert_coordinate(self.data, str(self.lat1), 'lat1')
+        self.convert_coordinate(self.data, str(self.long1), 'long1')
+        self.convert_coordinate(self.data, str(self.lat2), 'lat2')
+        self.convert_coordinate(self.data, str(self.long2), 'long2')
         self.scale_impute(self.data, 'mean')
         self.wgs84_to_web_mercator(self.data, 'long1', 'lat1')
         self.wgs84_to_web_mercator(self.data, 'long2', 'lat2')
         self.data['timestamp_date'] = self.data['timestamp1'].dt.strftime('%Y-%m-%d')
+
+DataSource.DataSource.types['NYK'] = NYK

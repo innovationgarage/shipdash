@@ -7,23 +7,33 @@ class GraphElement(object):
         self.app = app
         self.graph_title = graph_id        
         self.graph_title = graph_title
-    
-    def draw_line(self, t, x, dsrc, **kwargs):
-        self.t = t
-        self.x = x
-        self.dsrc = dsrc
-        self.graph.line(self.t, self.x, source=self.dsrc, **kwargs)
-        self.style = "line"
+        self.draw()
 
-    def draw_scatter(self, x, y, dsrc):
-        self.x = x
-        self.y = y
-        self.dsrc = dsrc
-        self.graph.circle(self.x, self.y, source=self.dsrc)
-        self.style = "circle"
+    types = {}
+
+    @classmethod
+    def load(cls, config):
+        return cls.types[config['type']](**config['args'])
+    
+    def draw(self):
+        self.graphs = []
+        for dsrc in self.app.get_dsrcs():
+            self.graphs.append(
+                self.draw_dsrc(dsrc)
+            )
+
+    def draw_dsrc(self, dsrc):
+        raise NotImplemented
+
+    def draw_line(self, dsrc):
+        return self.graph.line("%s:x" % self.id, "%s:y" % self.id, source=dsrc)
+
+    def draw_scatter(self, dsrc):
+        return self.graph.circle("%s:x" % self.id, "%s:y" % self.id, source=dsrc)
 
     def save(self):
         return {
+            "type": type(self).__name__,
             "args": {
                 "id": self.graph_id,
                 "title": self.graph_title,

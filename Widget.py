@@ -1,14 +1,7 @@
-from bokeh.models.widgets import Slider, Select
+import bokeh.models.widgets # import Slider, Select
 import GraphElement
 
 class Widget(GraphElement.GraphElement):
-    widget_types = {
-#        "RangeSlider": #FIXME!
-        "Slider_from": Slider,
-        "Slider_to": Slider,        
-        "Select": Select,
-    }
-    
     def __init__(self, app, graph_id, graph_title, graph_type, width=1, height=0.1, **widget_config):
         GraphElement.GraphElement.__init__(self, app, graph_id, graph_title)
         self.width = width
@@ -22,4 +15,38 @@ class Widget(GraphElement.GraphElement):
             width=int(self.app.graph_item_width * self.width),
             height=int(self.app.graph_item_height * self.height),
             **widget_config)
+        self.graph.on_change('value', self.update)
 
+    def update(self, attrname, old, new):
+
+class Select(Widget):
+    graph_type = bokeh.models.widgets.Select
+    def __init__(self, app, graph_id, graph_title, graph_type, width=1, height=0.1, mapping="", **widget_config):
+        self.mapping = mapping
+        Widget.__init__(self, app, graph_id, graph_title, graph_type, width, height, widget_config)
+    
+    def update(self, attrname, old, new):
+        self.app.mapping[self.mapping] = new
+        self.app.update_dsrcs()
+
+GraphElement.GraphElement.types['Select'] = Select
+
+
+class Slider_from(Widget):
+    graph_type = bokeh.models.widgets.Slider
+
+    def update(self, attrname, old, new):
+        self.app.rage['from'] = new
+        self.app.update_dsrcs()
+
+GraphElement.GraphElement.types['Slider_from'] = Slider_from
+
+
+class Slider_to(Widget):
+    graph_type = bokeh.models.widgets.Slider
+
+    def update(self, attrname, old, new):
+        self.app.rage['to'] = new
+        self.app.update_dsrcs()
+
+GraphElement.GraphElement.types['Slider_to'] = Slider_to

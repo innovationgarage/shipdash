@@ -1,3 +1,7 @@
 *.py~
 *.pyc
 *.csv
+*.dll
+*.pdb
+*.exe
+*.cache

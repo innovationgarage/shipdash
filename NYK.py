@@ -13,7 +13,7 @@ class NYK(DataSource.DataSource):
         self.dsrc_path = dsrc_path
         with open('dash_config.json') as data_file:
             config = json.load(data_file)
-        self.config = [x if x['args']['ship_name']==self.dsrc_name else '' for x in config['app']['data']][0]
+        self.config = [x if x['args']['ship_name']==self.dsrc_name else '' for x in config['app']['data']['args']['children']][0]
         self.read_prepare_data()
     
     """FIXME! These methods are fine-tuned for the current data sets. I

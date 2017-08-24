@@ -1,0 +1,123 @@
+{
+    "app": {
+	"data": {
+	    "type": "file",
+	    "args": {
+		"children":
+		[
+		    {
+			"type": "csv",
+			"args": {
+			    "path": "data/",
+			    "file_name":"nykfushimi@nyk.dualog.net_output_combined.csv",
+			    "ship_name":"Fushimi",
+			    "header_rows": null,
+			    "date_cols": [0,1],
+			    "skip_rows": 0,		    
+			    "long1": "2008",
+			    "lat1": "2000",
+			    "long2": "2012",
+			    "lat2": "2004"
+			}
+		    },
+		    {
+			"type": "csv",
+			"args": {
+			    "path": "data/",
+			    "file_name":"acxdiamond@nyk.dualog.net_output_combined.csv",
+			    "ship_name":"Diamond",
+			    "header_rows": null,
+			    "date_cols": [0,1],
+			    "skip_rows": 9,
+			    "long1": "1034",
+			    "lat1": "1026",
+			    "long2": "1038",
+			    "lat2": "1030"
+			}
+		    }
+		]
+	    }
+	},
+	"layout": {
+	    "type": "row",
+	    "args": {
+		"children":
+		[
+		    {
+			"type": "widgetbar",
+			"args": {
+			    "id": "wb1",
+			    "title": "widgetbar",
+			    "children": {
+				"type": "column",
+				"args": {
+				    "children": [
+					{
+					    "type": "Select",
+					    "args": {"id":"w1", "title": "ship"}
+					},
+					{
+					    "type": "Select",
+					    "args": {"id":"w2", "title": "ts1_x"}
+					},
+					{
+					    "type": "Select",
+					    "args": {"id":"w3", "title": "ts2_x"}
+					},
+					{
+					    "type": "Select",
+					    "args": {"id":"w4", "title": "scatter_x"}
+					},
+					{
+					    "type": "Select",
+					    "args": {"id":"w5", "title": "scatter_y"}
+					},
+					{
+					    "type": "Slider_from",
+					    "args": {"id":"w6", "title": "from"}
+					},
+					{
+					    "type": "Slider_to",
+					    "args": {"id":"w7", "title": "to"}
+					}
+				    ]
+				}
+			    }
+			}
+		    },
+		    {
+			"type": "column",
+			"args": {
+			    "children": [
+				{
+				    "type": "row",
+				    "args": {
+					"children": [
+					    {
+						"type": "Map",
+						"args": {"id":"m1", "title": "m1"}
+					    },
+					    {
+						"type": "Map",
+						"args": {"id":"m2", "title": "m2"}
+					    }
+					]
+				    }
+				},
+				{
+				    "type": "Timeseries",
+				    "args": {"id":"ts1", "title": "ts1"}
+				},
+				{
+				    "type": "Timeseries",
+				    "args": {"id":"ts2", "title": "ts2"}
+				}
+			    ]
+			}
+		    }
+		]
+	    }
+	}
+    }
+}
+

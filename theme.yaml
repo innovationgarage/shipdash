@@ -1,0 +1,11 @@
+attrs:
+  Figure:
+    tools: [pan, wheel_zoom, box_zoom, reset]
+    outline_line_color: null
+  Grid:
+    grid_line_color: null
+  Toolbar:
+    logo: null
+  Title:
+    text_font_size: '12pt'
+    text_font: 'times'

@@ -1,4 +1,4 @@
-from bokeh.models.sources import ColumnDataSource
+import bokeh.plotting as bp
 import data_tools as dtools
 import GraphElement
 import DataSource
@@ -23,7 +23,8 @@ class App(object):
         self.active_data = active_data
         self.layout = GraphElement.GraphElement.load(self, layout)
         self.layout.draw()
-
+        bp.curdoc().add_root(self.layout.graph)
+        
     def get_dsrcs(self):
         for active_data in self.active_data:
             yield self.data_sources[active_data].dsrc

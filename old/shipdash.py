@@ -61,10 +61,10 @@ x_selector = Select(title="X:", value="12",
                     options=list(df.loc[:,df.dtypes == 'float64'].columns), width=ww)
 y_selector = Select(title="Y:", value="wmlat2",
                     options=list(df.loc[:,df.dtypes == 'float64'].columns), width=ww)
-# from_slider = Slider(title="from step", value=0, start=0, end=len(df), step=1, width=ww)
-# to_slider = Slider(title="to step", value=100, start=0, end=len(df), step=1, width=ww)
+from_slider = Slider(title="from step", value=0, start=0, end=len(df), step=1, width=ww)
+to_slider = Slider(title="to step", value=100, start=0, end=len(df), step=1, width=ww)
 
-range_slider = RangeSlider(title='index range', start=0, end=len(df), range=(10,100), step=10, width=ww)
+#range_slider = RangeSlider(title='index range', start=0, end=len(df), range=(10,100), step=10, width=ww)
 
 ##Update the data based on inputs
 # def update_plot_labels(attrname, old, new):
@@ -79,10 +79,10 @@ def update_data(attrname, old, new):
         df = df_diamond
         
     # Get the current slider values
-    # from_ind = from_slider.value
-    # to_ind = to_slider.value
-    from_ind = range_slider.range[0]
-    to_ind = range_slider.range[1]
+    from_ind = from_slider.value
+    to_ind = to_slider.value
+    # from_ind = range_slider.range[0]
+    # to_ind = range_slider.range[1]
     feature_ts_select = feature_ts_selector.value
     feature_ts2_select = feature_ts2_selector.value
     x_select = x_selector.value
@@ -112,15 +112,15 @@ def update_data(attrname, old, new):
         
 for w in [
         ship_selector,
-        # from_slider,
-        # to_slider,
+        from_slider,
+        to_slider,
         feature_ts_selector,
         feature_ts2_selector,
         x_selector,
         y_selector,
 ]:
     w.on_change('value', update_data)
-    range_slider.on_change('range', update_data)
+#    range_slider.on_change('range', update_data)
     
 ##Organize the layout
 widgets = column(
@@ -130,9 +130,9 @@ widgets = column(
         feature_ts2_selector,
         x_selector,
         y_selector,
-        range_slider
-        # from_slider,
-        # to_slider
+#        range_slider
+        from_slider,
+        to_slider
     ],
     sizing_mode="fixed"
 )

@@ -31,6 +31,9 @@ class GraphElement(object):
         import pdb
         pdb.set_trace()
 
+    def draw_path(self, dsrc):
+        return self.graph.line("%s:longitude" % self.id, "%s:latitude" % self.id, source=dsrc)
+
     def draw_line(self, dsrc):
         return self.graph.line("%s:x" % self.id, "%s:y" % self.id, source=dsrc)
 

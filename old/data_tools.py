@@ -54,7 +54,7 @@ def read_prepare_data(ship):
         sr = 9
         long1, lat1 = '1034', '1026'
         long2, lat2 = '1038', '1030'
-    df = pd.read_csv(filename, header=None, parse_dates=[0,1], skiprows=sr)
+    df = pd.read_csv(filename, header=None, parse_dates=[0,1], skiprows=sr, low_memory=False)
     df['timestamp2'] = pd.to_datetime(df[0])
     df['timestamp1'] = pd.to_datetime(df[1])
     df = clean(df, ship)

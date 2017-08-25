@@ -53,7 +53,7 @@ def draw_map(x_range, y_range):
     fig.axis.visible = False
     url = 'http://c.tile.openstreetmap.org/{Z}/{X}/{Y}.png'
     attribution = ""#Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL"
-    fig.add_tile(WMTSTileSource(url=url, attribution=attribution))
+    fig_tile = fig.add_tile(WMTSTileSource(url=url, attribution=attribution))
     return fig
 
 def draw_timeseries(y_label):

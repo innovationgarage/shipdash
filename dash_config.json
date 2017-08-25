@@ -33,17 +33,17 @@
 	    }
 	}
     },
-    "range": {"from": 0, "to": -1},
+    "range": {"from": 0, "to": 1000},
     "active_data": ["Fushimi"],
     "mapping": {
 	"m1:longitude": "wmlong1",
 	"m1:latitude": "wmlat1",
-	"sc1:x": "wmlong2",
-	"sc1:y": "wmlat2",
+	"sc1:x": "long2",
+	"sc1:y": "lat2",
 	"ts1:x": "timestamp1",
 	"ts1:y": "lat1",
 	"ts2:x": "timestamp1",
-	"ts2:y": "lat1"
+	"ts2:y": "long1"
     },
     "layout": {
 	"type": "Row",

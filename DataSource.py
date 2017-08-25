@@ -1,4 +1,5 @@
 import pandas as pd
+import bokeh.models.sources
 
 class DataSource(object):
     dsrc_types = {
@@ -14,11 +15,11 @@ class DataSource(object):
     types = {}
 
     @classmethod
-    def load(cls, config):
-        return cls.types[config['type']](**config['args'])
+    def load(cls, app, config):
+        return cls.types[config['type']](app, **config['args'])
 
     def init_dsrc(self):
-        self.dsrc = ColumnsDataSource(data={})
+        self.dsrc = bokeh.models.sources.ColumnDataSource(data={})
         for col in self.app.mapping.keys():
             self.dsrc.add([], col)
 

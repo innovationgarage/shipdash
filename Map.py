@@ -4,8 +4,8 @@ import GraphElement
 
 class Map(GraphElement.GraphElement):
 
-    def __init__(self, app, graph_id, graph_title, width=1, height=1):
-        GraphElement.GraphElement.__init__(self, app, graph_id, graph_title)
+    def __init__(self, app, id, title, width=1, height=1):
+        GraphElement.GraphElement.__init__(self, app, id, title)
         self.x_range = (13884029, 12553304)
         self.y_range = (-2698291, 6455972)
         self.url = 'http://c.tile.openstreetmap.org/{Z}/{X}/{Y}.png'
@@ -23,7 +23,6 @@ class Map(GraphElement.GraphElement):
 
     def draw_dsrc(self, dsrc):
         return self.graph.line("%s:longitude" % self.id, "%s:latitude" % self.id, source=dsrc)
-
 
     def save(self):
         res = GraphElement.GraphElement.save(self)

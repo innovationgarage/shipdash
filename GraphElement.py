@@ -1,19 +1,24 @@
 import bokeh.plotting as bp
-from bokeh.tile_providers import WMTSTileSource
+import bokeh.layouts as bl
 
 class GraphElement(object):
 
-    def __init__(self, app, graph_id, graph_title):
+    def __init__(self, app, id='', title=''):
         self.app = app
-        self.graph_title = graph_id        
-        self.graph_title = graph_title
-        self.draw()
+        self.id = id        
+        self.title = title
 
     types = {}
 
     @classmethod
-    def load(cls, config):
-        return cls.types[config['type']](**config['args'])
+    def load(cls, app, config):
+        return cls.types[config['type']](app=app, **config['args'])
+        # try:
+        #     return cls.types[config['type']](app=app, **config['args'])
+        # except Exception, e:
+        #     import pdb, sys
+        #     sys.last_traceback = sys.exc_info()[2]
+        #     pdb.pm()
     
     def draw(self):
         self.graphs = []
@@ -23,7 +28,8 @@ class GraphElement(object):
             )
 
     def draw_dsrc(self, dsrc):
-        raise NotImplemented
+        import pdb
+        pdb.set_trace()
 
     def draw_line(self, dsrc):
         return self.graph.line("%s:x" % self.id, "%s:y" % self.id, source=dsrc)
@@ -54,4 +60,29 @@ class GraphElement(object):
 
     def flatten_graph_elements():
         return [self]
-    
+
+class Row(GraphElement):
+    graph_type = bl.row
+    def __init__(self, app, children, **arg):
+        GraphElement.__init__(self, app, **arg)
+        self.children = [GraphElement.load(app, child) for child in children]
+        self.graph = bl.row([child.graph for child in self.children])
+
+    def draw(self):
+        for child in self.children:
+            child.draw()
+
+GraphElement.types['Row'] = Row    
+
+class Column(GraphElement):
+    graph_type = bl.column
+    def __init__(self, app, children, **arg):
+        GraphElement.__init__(self, app, **arg)
+        self.children = [GraphElement.load(app, child) for child in children]
+        self.graph = bl.column([child.graph for child in self.children])
+
+    def draw(self):
+        for child in self.children:
+            child.draw()
+
+GraphElement.types['Column'] = Column    

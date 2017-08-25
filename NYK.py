@@ -8,7 +8,7 @@ import os.path
 
 class NYK(DataSource.DataSource):
 
-    def __init__(self, app, dsrc_name, dsrc_type='csv', dsrc_path='data/', file_name = '', header_rows=None, date_cols=None, skip_rows=None, lat1=None, long1=None, lat2=None, long2=None):
+    def __init__(self, app, dsrc_name='', dsrc_type='csv', dsrc_path='data/', file_name='', header_rows=None, date_cols=None, skip_rows=None, lat1=None, long1=None, lat2=None, long2=None):
         DataSource.DataSource.__init__(self, app, dsrc_name)
         self.dsrc_type = dsrc_type
         self.dsrc_path = dsrc_path
@@ -20,13 +20,12 @@ class NYK(DataSource.DataSource):
         self.long1 = long1
         self.lat2 = lat2
         self.long2 = long2
-]
         self.read_prepare_data()
         self.init_dsrc()
 
-    """FIXME! These methods are fine-tuned for the current data sets. I
-    need to generalize them once I know more about different types of data
-    coming in"""
+    """These methods are fine-tuned for the current data sets. I need to
+    generalize them once I know more about different types of data coming
+    in"""
 
     @classmethod
     def clean(cls, df, name):
@@ -37,8 +36,8 @@ class NYK(DataSource.DataSource):
         df.columns = [str(x) for x in df.columns]
         df.reset_index(level=[0], inplace=True)
         df.rename(columns={'index': 'ind'}, inplace=True)
-#         """FIXME! This is to find coordinate columns etc. manually, because we
-# don't know anything about the structure of our data!"""
+        """This is to find coordinate columns etc. manually, because we don't
+        know anything about the structure of our data!"""
 #         df.to_csv('data/'+name+'_clean.csv')
         return df
     
@@ -78,6 +77,7 @@ class NYK(DataSource.DataSource):
             parse_dates = self.date_cols,
             skiprows = self.skip_rows,
             error_bad_lines = False,
+            low_memory = False
         )
 
         self.data['timestamp2'] = pd.to_datetime(self.data[0])

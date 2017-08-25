@@ -3,8 +3,8 @@ import GraphElement
 
 class Timeseries(GraphElement.GraphElement):
 
-    def __init__(self, app, graph_id, graph_title, width=2, height=0.5):
-        GraphElement.GraphElement.__init__(self, app, graph_id, graph_title)
+    def __init__(self, app, id, title, width=2, height=0.5):
+        GraphElement.GraphElement.__init__(self, app, id, title)
         self.width = width
         self.height = height
         self.graph = bp.figure(

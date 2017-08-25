@@ -6,6 +6,7 @@
 		"dsrc_type": "csv",
 		"dsrc_path": "data/",
 		"file_name":"nykfushimi@nyk.dualog.net_output_combined.csv",
+		"dsrc_name": "Fushimi",		
 		"header_rows": null,
 		"date_cols": [0,1],
 		"skip_rows": 0,		    
@@ -16,10 +17,12 @@
 	    }
 	},
 	"Diamond": {
-	    "type": "csv",
+	    "type": "NYK",
 	    "args": {
-		"path": "data/",
+		"dsrc_type": "csv",		
+		"dsrc_path": "data/",
 		"file_name":"acxdiamond@nyk.dualog.net_output_combined.csv",
+		"dsrc_name": "Diamond",
 		"header_rows": null,
 		"date_cols": [0,1],
 		"skip_rows": 9,
@@ -43,63 +46,56 @@
 	"ts2:y": "lat1"
     },
     "layout": {
-	"type": "row",
+	"type": "Row",
 	"args": {
 	    "children":
 	    [
 		{
-		    "type": "widgetbar",
-		    "args": {
-			"id": "wb1",
-			"title": "widgetbar",
-			"children": {
-			    "type": "column",
-			    "args": {
-				"children": [
-				    {
-					"type": "Select",
-					"args": {"id":"w1", "title": "ts1_x", "mapping": "ts1:y"}
-				    },
-				    {
-					"type": "Select",
-					"args": {"id":"w2", "title": "ts2_x", "mapping": "ts2:y"}
-				    },
-				    {
-					"type": "Select",
-					"args": {"id":"w3", "title": "scatter_x", "mapping": "sc1:x"}
-				    },
-				    {
-					"type": "Select",
-					"args": {"id":"w4", "title": "scatter_y", "mapping": "sc1:y"}
-				    },
-				    {
-					"type": "Slider_from",
-					"args": {"id":"w6", "title": "from"}
-				    },
-				    {
-					"type": "Slider_to",
-					"args": {"id":"w7", "title": "to"}
-				    }
-				]
-			    }
-			}
-		    }
-		},
-		{
-		    "type": "column",
+		    "type": "Column",
 		    "args": {
 			"children": [
 			    {
-				"type": "row",
+				"type": "Select",
+				"args": {"id":"w1", "title": "ts1_x", "mapping": "ts1:y"}
+			    },
+			    {
+				"type": "Select",
+				"args": {"id":"w2", "title": "ts2_x", "mapping": "ts2:y"}
+			    },
+			    {
+				"type": "Select",
+				"args": {"id":"w3", "title": "scatter_x", "mapping": "sc1:x"}
+			    },
+			    {
+				"type": "Select",
+				"args": {"id":"w4", "title": "scatter_y", "mapping": "sc1:y"}
+			    },
+			    {
+				"type": "Slider_from",
+				"args": {"id":"w6", "title": "from"}
+			    },
+			    {
+				"type": "Slider_to",
+				"args": {"id":"w7", "title": "to"}
+			    }
+			]
+		    }
+		},
+		{
+		    "type": "Column",
+		    "args": {
+			"children": [
+			    {
+				"type": "Row",
 				"args": {
 				    "children": [
 					{
-					    "type": "Map",
-					    "args": {"id":"m1", "title": "m1"}
-					},
-					{
 					    "type": "Scatter",
 					    "args": {"id":"sc1", "title": "sc1"}
+					},					
+					{
+					    "type": "Map",
+					    "args": {"id":"m1", "title": "m1"}
 					}
 				    ]
 				}

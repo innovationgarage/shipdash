@@ -12,11 +12,6 @@ class App(object):
         "Timeseries": Timeseries,
         "Scatter": Scatter
     }
-    graph_styles = {
-        "line": GraphElement.GraphElement.draw_line,
-        "scatter": GraphElement.GraphElement.draw_scatter,
-        "path": Map.Map.draw_path
-    }
 
     def __init__(self, data, active_data, mapping, range, layout, graph_item_width=400, graph_item_height=400):
         self.graph_item_width = graph_item_width
@@ -24,12 +19,10 @@ class App(object):
 
         self.mapping = mapping
         self.range = range
-        self.data_sources = {
-            name: DataSource.load(cfg)
-            for name, cfg in data.iteritems()
-        }
+        self.data_sources = {name: DataSource.DataSource.load(self, cfg) for name, cfg in data.iteritems()}
         self.active_data = active_data
-        self.layout = GraphElement.GraphElement.load(layout)
+        self.layout = GraphElement.GraphElement.load(self, layout)
+        self.layout.draw()
 
     def get_dsrcs(self):
         for active_data in self.active_data:
@@ -66,11 +59,4 @@ class App(object):
                 "graph_item_height": self.graph_item_height
             }
         }
-
-# x = Scatter(..)
-# with open("foo.json", "w") as f:
-#     json.dump(x.save(), f)
-
-# with open("foo.json") as f:
-#     y = make_graph(json.load(f))
     

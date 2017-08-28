@@ -1,4 +1,3 @@
-### to run 
 
 - New veriosn
   * from the root directory
